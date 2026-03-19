@@ -64,6 +64,27 @@
 - Updated backend Dockerfile to set PYTHONPATH for module resolution.
 - Updated docker-compose.yml: improved healthcheck reliability, removed healthcheck for backend startup.
 - Enhanced frontend: loading states, error handling, health check button in AdminPanel.tsx, citation chip expansion in Chat.tsx.
+- Fixed `docker-compose.yml`: starter code passed `OPENAI_API_KEY` to the backend container instead of `OPENROUTER_API_KEY`, so the key never reached the app and it silently fell back to the stub LLM.
+
+## OpenRouter API Key
+
+The project uses [OpenRouter](https://openrouter.ai) to call real LLMs (default: `openai/gpt-4o-mini`).
+
+**Getting a key:**
+1. Sign up at https://openrouter.ai (free)
+2. Go to **Keys** → **Create Key**
+3. Copy the key and paste it into `.env`:
+   ```
+   OPENROUTER_API_KEY=sk-or-v1-your-key-here
+   LLM_PROVIDER=openrouter
+   ```
+
+**Using a free model (no credits needed):**
+```
+LLM_MODEL=meta-llama/llama-3.1-8b-instruct:free
+```
+
+**Offline / no key:** Set `LLM_PROVIDER=stub` in `.env` — the deterministic stub LLM works without any key.
 
 ## Running & Testing
 
